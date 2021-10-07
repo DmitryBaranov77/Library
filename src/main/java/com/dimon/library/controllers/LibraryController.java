@@ -1,24 +1,28 @@
 package com.dimon.library.controllers;
 
-import com.dimon.library.dao.UserDao;
-import com.dimon.library.models.User;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.dimon.library.dao.BookDao;
+import com.dimon.library.models.Book;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("library")
 public class LibraryController {
 
-    private UserDao userDao;
+    private BookDao bookDao;
 
-    public LibraryController(UserDao userDao) {
-        this.userDao = userDao;
+    public LibraryController(BookDao bookDao) {
+        this.bookDao = bookDao;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void login(@RequestBody User user){
-        userDao.save(user);
+    @PostMapping
+    public void addNewBook(@RequestBody Book book){
+        bookDao.save(book);
+    }
+
+    @GetMapping
+    public List<Book> showBooks(){
+        return bookDao.findAll();
     }
 }
