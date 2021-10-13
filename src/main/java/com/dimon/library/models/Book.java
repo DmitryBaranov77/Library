@@ -2,12 +2,14 @@ package com.dimon.library.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Getter
 @Entity
+@ToString
 @Table(name  = "books")
 public class Book {
     @Id

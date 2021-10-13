@@ -17,12 +17,24 @@ public class LibraryController {
     }
 
     @PostMapping
-    public void addNewBook(@RequestBody Book book){
+    public Book addNewBook(@RequestBody Book book){
         bookDao.save(book);
+        return bookDao.findById(book.getId()).get();
     }
 
     @GetMapping
     public List<Book> showBooks(){
         return bookDao.findAll();
+    }
+
+    @PutMapping()
+    public Book update(@RequestBody Book book){
+        bookDao.save(book);
+        return bookDao.findById(book.getId()).get();
+    }
+
+    @DeleteMapping()
+    public void delete(@RequestBody Book book){
+        bookDao.delete(book);
     }
 }
