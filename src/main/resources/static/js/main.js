@@ -66,11 +66,13 @@ Vue.component('book-row', {
     props: ['book', 'editMethod', 'books'],
     template:
         '<div> ' +
-        '(<b>{{ book.id }}</b>) <i>{{ book.author }}</i>  {{ book.name }}  {{ book.publicationYear }}г.  {{ book.pages }}стр.' +
-        '<span style="position: absolute; right: 0">' +
-        '<input type="button" value="Edit"  @click="edit"/>' +
-        '<input type="button" value="Delete"  @click="del"/>' +
-        '</span>' +
+            '(<b>{{ book.id }}</b>) <i>{{ book.author }}</i>  {{ book.name }}  {{ book.publicationYear }}г.  {{ book.pages }}стр.' +
+            '<span style="position: absolute; right: 0">' +
+                '<div>'+
+                    '<input type="button" value="Edit"  @click="edit"/>' +
+                    '<input type="button" value="Delete"  @click="del"/>' +
+                '</div>'+
+            '</span>' +
         '</div>',
     methods: {
         edit: function () {
@@ -98,14 +100,6 @@ Vue.component('books-list', {
         '<book-form :books="books" :bookAttr="book"/>' +
         '<book-row v-for="book in books" :key="book.id" :book="book" :editMethod="editBook" :books="books"/>' +
         '</div>',
-    created: function () {
-        resource.get().then(resultList =>
-            resultList.json().then(data => {
-                    data.forEach(book => this.books.push(book));
-                    console.log(data)
-                }
-            ))
-    },
     methods: {
         editBook: function (book) {
             this.book = book;
@@ -118,6 +112,14 @@ let app = new Vue({
     el: '#app',
     template: '<books-list :books="books" />',
     data: {
-        books: []
+        books: [],
+    },
+    created: function () {
+        resource.get().then(resultList =>
+            resultList.json().then(data => {
+                    data.forEach(book => this.books.push(book));
+                    console.log(data)
+                }
+            ))
     }
 });
